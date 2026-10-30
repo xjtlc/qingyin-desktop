@@ -1,0 +1,263 @@
+/* Soft milk glass with mist-blue accents: load after styles.css and harmony.css.
+ * Replace the five base --p-* colours to change the whole palette.
+ * Semantic colours are reserved for small indicators; all selection uses --p-accent.
+ * Background alpha changes the material, never the opacity of the window or its text.
+ * The app owns one continuous glass backdrop; chrome only adds light surface tints.
+ */
+:root{
+  color-scheme:dark;
+  --p-bg:#222630;
+  --p-surface:#333943;
+  --p-raise:#444c59;
+  --p-accent:#91b7df;
+  --p-material-light:#f3f5f8;
+  --p-text:#f8fafc;
+  --p-text-strong:color-mix(in srgb,var(--p-text) 96%,white);
+  --p-muted:#eef2f7;
+  --p-subtle:#e0e7ef;
+  --p-text-shadow:0 1px 1px rgb(10 15 25 / .32);
+  --p-art-ink:#e6edf5;
+  --p-art-muted:#c7d1df;
+  --p-art-accent:#c7dbf2;
+  --p-icon-accent:var(--p-accent);
+  --p-favorite-ink:var(--p-favorite);
+  --p-error-ink:#ffe6eb;
+  --p-success-ink:#c0e4d1;
+  --p-nav:color-mix(in srgb,var(--p-bg) 96%,black);
+  --p-line:color-mix(in srgb,var(--p-material-light) 17%,transparent);
+  --p-line-strong:color-mix(in srgb,var(--p-material-light) 32%,transparent);
+  --p-hover:color-mix(in srgb,var(--p-material-light) 10%,transparent);
+  --p-accent-hover:color-mix(in srgb,var(--p-accent) 92%,var(--p-material-light));
+  --p-accent-ink:color-mix(in srgb,var(--p-bg) 94%,black);
+  --p-accent-text:color-mix(in srgb,var(--p-accent) 45%,var(--p-text));
+  --p-accent-soft:color-mix(in srgb,var(--p-accent) 20%,transparent);
+  --p-accent-line:color-mix(in srgb,var(--p-accent) 48%,transparent);
+  --p-focus:var(--p-icon-accent);
+  --p-favorite:#c396a8;
+  --p-gold:#c9af83;
+  --p-danger:#cf8f91;
+  --p-success:#9bbca8;
+  --p-canvas-alpha:22%;
+  --p-nav-alpha:5%;
+  --p-chrome-alpha:10%;
+  --p-pane-alpha:32%;
+  --p-popup-bg:#2b313c;
+  --p-popup-line:color-mix(in srgb,var(--p-text) 14%,var(--p-popup-bg));
+  --p-blur:28px;
+  --p-frost:blur(var(--p-blur)) saturate(125%);
+  --p-underlay-frost:blur(32px) saturate(115%) brightness(.74);
+  --p-milk:#f1f4fa;
+  --p-sheen:linear-gradient(135deg,color-mix(in srgb,var(--p-milk) 22%,transparent),color-mix(in srgb,var(--p-milk) 10%,transparent) 45%,color-mix(in srgb,var(--p-milk) 16%,transparent));
+  --p-grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23g)' opacity='0.025'/></svg>");
+  --p-canvas:color-mix(in srgb,var(--p-bg) var(--p-canvas-alpha),transparent);
+  --p-nav-glass:color-mix(in srgb,var(--p-nav) var(--p-nav-alpha),transparent);
+  --p-chrome:color-mix(in srgb,var(--p-surface) var(--p-chrome-alpha),transparent);
+  --p-pane:color-mix(in srgb,var(--p-surface) var(--p-pane-alpha),transparent);
+  --p-control:color-mix(in srgb,var(--p-milk) 7%,transparent);
+  --p-overlay:color-mix(in srgb,var(--p-bg) 20%,transparent);
+  --p-specular:inset 0 1px 0 rgb(255 255 255 / .30),inset 0 -1px 0 rgb(255 255 255 / .05);
+  --p-shadow:0 12px 32px rgb(0 0 0 / .16),var(--p-specular);
+  --p-rim:inset 0 0 0 1px var(--p-line);
+  --p-qr-bg:white;
+  --p-qr-ink:#33404e;
+  /* Keep the existing sheet's aliases coherent, including its secondary accent. */
+  --h-bg:var(--p-bg);--h-surface:var(--p-surface);--h-raise:var(--p-raise);
+  --h-nav:var(--p-nav);--h-nav-raise:var(--p-surface);
+  --h-tint:var(--p-hover);--h-tint-strong:var(--p-raise);
+  --h-line:var(--p-line);--h-line-soft:var(--p-line);--h-line-strong:var(--p-line-strong);
+  --h-faint:var(--p-subtle);--h-muted:var(--p-muted);--h-soft:var(--p-muted);
+  --h-ink:var(--p-text);--h-ink-strong:var(--p-text-strong);
+  --h-lime:var(--p-accent);--h-lime-deep:var(--p-accent-hover);--h-lime-tint:var(--p-accent-soft);
+  --h-lime-ink:var(--p-accent-ink);--h-lime-text:var(--p-accent-text);
+  --h-violet:var(--p-accent);--h-violet-soft:var(--p-accent);--h-violet-ink:var(--p-accent-text);--h-violet-tint:var(--p-accent-soft);
+  --h-rose:var(--p-favorite);--h-gold:var(--p-gold);--h-gold-ink:var(--p-gold);
+  --h-sh-1:0 1px 2px rgb(0 0 0 / .12);--h-sh-2:0 4px 14px rgb(0 0 0 / .18);--h-sh-3:var(--p-shadow);
+  --ink:var(--p-text);--muted:var(--p-muted);--subtle:var(--p-subtle);
+  --surface:var(--p-surface);--nav:var(--p-nav);--line:var(--p-line);--white:var(--p-text);
+  --accent:var(--p-accent);--violet:var(--p-accent);
+  --glass-grain:var(--p-grain);--glass-rim:var(--p-rim);--glass-specular:var(--p-specular);--glass-lift:var(--p-shadow);
+}
+/* Frost only large surfaces and floating panes; a long song list needs no per-row blur. */
+body{color:var(--p-text);background:transparent}
+.app-shell{background:var(--p-grain),var(--p-sheen),var(--p-canvas);background-blend-mode:soft-light,normal,normal;box-shadow:inset 0 0 0 1px rgb(255 255 255 / .22);backdrop-filter:var(--p-underlay-frost);-webkit-backdrop-filter:var(--p-underlay-frost)}
+.main-shell{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+.main-content,.topbar{background:transparent}
+.topbar{box-shadow:inset 0 -1px 0 rgb(255 255 255 / .065)}
+.sidebar{background:var(--p-nav-glass);color:var(--p-muted);box-shadow:inset -1px 0 0 rgb(255 255 255 / .10);backdrop-filter:none;-webkit-backdrop-filter:none;overflow:hidden}
+.player,.pane,.queue-panel,.login-modal,.lyrics-panel,.toast{background:var(--p-grain),var(--p-sheen),var(--p-pane);background-blend-mode:soft-light,normal,normal;border-color:var(--p-line-strong);box-shadow:var(--p-shadow);backdrop-filter:var(--p-frost);-webkit-backdrop-filter:var(--p-frost)}
+.player{background:linear-gradient(180deg,rgb(255 255 255 / .10),rgb(255 255 255 / .035)),var(--p-chrome);background-blend-mode:normal;border-top-color:var(--p-line);box-shadow:var(--p-specular),0 -5px 22px rgb(0 0 0 / .06);backdrop-filter:none;-webkit-backdrop-filter:none}
+/* Reading surfaces cover the underlying list and avoid another live blur layer. */
+.queue-panel,.login-modal,.lyrics-panel,.toast{background:var(--p-popup-bg);background-image:none;background-blend-mode:normal;border-color:var(--p-popup-line);backdrop-filter:none;-webkit-backdrop-filter:none;opacity:1}
+.queue-panel .panel-header,.queue-panel .effects-note{border-color:var(--p-popup-line)}
+.queue-panel,.login-modal,.lyrics-panel{scrollbar-color:var(--p-popup-line) transparent}
+.brand-name,.page-intro,.library-copy,.panel-header,.sidebar-note,.sidebar-footnote,.track-title,.track-artist,.track-album,.track-duration,.track-index,.nav-item,.player-track-copy,.lyric-line,.lyrics-track,.account-copy,.top-login,.quality-group,.effects-note{ text-shadow:var(--p-text-shadow) }
+.panel-header,.effects-note,.list-header,.track-row{border-color:var(--p-line)}
+.modal-layer{background:var(--p-overlay);backdrop-filter:none;-webkit-backdrop-filter:none}
+.account-card,.global-search,.sort-chip,.small-pill,.quality-tag,.secondary-button,.library-shortcut,.welcome-card,.compact-tracks{background:var(--p-control);border-color:var(--p-line);box-shadow:var(--p-specular);color:var(--p-muted)}
+/* Brand, navigation and text. */
+.brand-name,.page-intro h1,.section-head h2,.library-copy h1,.hero-copy h2,.panel-header h2,.login-modal h2,.account-modal-content h2{color:var(--p-text-strong)}
+.brand-name span,.brand-subtitle,.sidebar-section-label,.sidebar-note,.sidebar-footnote,.nav-count,.eyebrow,.hero-caption,.section-head h2 small,.page-intro p,.playlist-description,.library-copy p{color:var(--p-subtle)}
+.sidebar-note strong,.account-copy strong,.account-copy small,.account-arrow svg,.topbar-location,.top-login,.welcome-card p,.library-shortcut p,.search-summary,.search-summary strong{color:var(--p-muted)}
+.nav-item{color:var(--p-muted)}
+.nav-item:hover{background:var(--p-hover);color:var(--p-text)}
+.nav-item.active{background:var(--p-accent-soft);color:var(--p-accent-text)}
+.nav-item.active svg,.nav-active-dot,.brand-mark span,.status-dot{color:var(--p-icon-accent)}
+.nav-active-dot,.brand-mark span{background:var(--p-accent)}
+.nav-item.active .nav-count,.queue-count-shuffle{color:var(--p-accent-text)}
+.status-dot{background:var(--p-success)}
+.account-avatar,.tiny-avatar,.account-profile-avatar,.account-modal-content .account-profile-avatar{background:var(--p-raise);color:var(--p-art-ink)}
+.tiny-disc{background:repeating-radial-gradient(circle,var(--p-nav) 0,var(--p-nav) 2px,var(--p-line) 3px,var(--p-nav) 4px);border-color:var(--p-line)}
+.tiny-disc:after{background:var(--p-accent)}
+/* Every control shares one restrained hover and one accent family. */
+.icon-button,.window-button,.text-button,.track-actions .icon-button,.playback-controls .icon-button,.lyrics-button{color:var(--p-muted)}
+.icon-button:hover:not(:disabled),.window-button:hover,.account-card:hover,.small-pill:hover,.quality-tag:hover,.secondary-button:hover,.sort-chip:hover,.library-shortcut:hover,.effect-option:hover{background:var(--p-hover);color:var(--p-text);border-color:var(--p-line-strong);box-shadow:none}
+.playback-controls .icon-button:hover,.track-actions .icon-button:hover{background:var(--p-hover);color:var(--p-text)}
+.text-button:hover,.track-title:hover,.library-shortcut .text-button,.library-shortcut .text-button:hover{color:var(--p-accent-text)}
+.primary-button,.main-play-button,.card-play:hover{background:var(--p-accent);color:var(--p-accent-ink);border-color:transparent;box-shadow:none}
+.primary-button,.main-play-button{ text-shadow:none }
+.primary-button:hover,.main-play-button:hover:not(:disabled){background:var(--p-accent-hover)}
+.window-button.close-window:hover,.close-window:hover{background:var(--p-danger);color:var(--p-accent-ink)}
+.topbar-back .icon-button,.window-divider,.player-tool-divider{border-color:var(--p-line)}
+.window-divider,.player-tool-divider{background:var(--p-line)}
+.global-search{color:var(--p-subtle)}
+.global-search input{color:var(--p-text)}
+.global-search input::placeholder{color:var(--p-subtle)}
+.global-search kbd{background:var(--p-control);border-color:var(--p-line-strong);color:var(--p-muted)}
+.global-search:focus-within{background:color-mix(in srgb,var(--p-milk) 12%,transparent);border-color:var(--p-accent-line);box-shadow:0 0 0 2px var(--p-focus)}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline-color:var(--p-focus)}
+::selection{background:var(--p-accent);color:var(--p-accent-ink)}
+button:disabled,.rail-button:disabled,.effect-option:disabled,.quality-option:disabled{opacity:.6}
+.quality-option:disabled,.effect-option:disabled{opacity:.75}
+.main-play-button:disabled{opacity:.62}
+/* Sorting, playing, selected options and temporary location. */
+.sort-chip.active,.effect-option.active,.effects-button.active,.output-button.active,.lyrics-button.active{background:var(--p-accent-soft);border-color:var(--p-accent-line);color:var(--p-accent-text);box-shadow:none}
+.effect-option-copy strong,.queue-row .track-title,.track-title,.player-track-copy>button,.playlist-title{color:var(--p-text)}
+.effect-option-copy small,.track-artist,.track-album,.track-duration,.track-index,.player-track-copy>div,.progress-control,.queue-size,.queue-row .track-artist,.panel-header p{color:var(--p-muted)}
+.effect-option.active .effect-option-copy strong,.effect-check,.queue-row.current .track-title,.track-row.current .track-title{color:var(--p-accent-text)}
+.track-row:hover,.queue-row:hover{background:var(--p-hover)}
+.track-row.current,.queue-row.current{background:var(--p-accent-soft);box-shadow:none}
+.track-row.current:before,.queue-row.current:before,.playing-wave i{background:var(--p-accent)}
+.playing-wave i{background:var(--p-icon-accent)}
+.track-row.current .track-artist,.track-row.current .track-album,.track-row.current .track-duration,.track-row.current .track-index,.track-row.current .icon-button{color:var(--p-muted)}
+.track-row.located{background:var(--p-accent-soft);box-shadow:inset 0 0 0 1px var(--p-accent-line)}
+.mode-button.active{color:var(--p-icon-accent)!important}
+.favorite-on,.track-actions .favorite-on{color:var(--p-favorite-ink)!important}
+.favorite-on svg{fill:color-mix(in srgb,var(--p-favorite) 14%,transparent)}
+.effect-option:disabled:hover,.quality-option:disabled:hover{background:transparent}
+/* Covers and hero decorations remain in the same neutral/blue family. */
+.playlist-cover,.track-thumb,.player-cover,.lyrics-art{background:var(--p-surface);color:var(--p-art-muted);box-shadow:var(--p-rim)}
+.cover-fallback,.cover-fallback.tone-1,.cover-fallback.tone-2,.cover-fallback.tone-3,.cover-fallback.tone-4,.library-art,.library-art.favorites-art,.library-art.local-art,.library-art.history-art,.welcome-card-art{background:linear-gradient(145deg,color-mix(in srgb,var(--p-accent) 12%,var(--p-raise)),var(--p-surface));color:var(--p-art-muted);box-shadow:none}
+.library-art{color:var(--p-art-accent)}
+.playlist-cover:after{background:linear-gradient(transparent,color-mix(in srgb,var(--p-bg) 18%,transparent))}
+.cover-count,.card-play{background:color-mix(in srgb,var(--p-bg) 85%,transparent);color:var(--p-art-ink);border-color:var(--p-line);box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.discover-hero{background:linear-gradient(120deg,color-mix(in srgb,var(--p-milk) 6%,transparent),color-mix(in srgb,var(--p-accent) 10%,transparent));border-color:var(--p-line);box-shadow:var(--p-specular)}
+.hero-art{background:radial-gradient(ellipse at 45% 53%,color-mix(in srgb,var(--p-accent) 12%,transparent),transparent 76%)}
+.hero-art:before{border-color:var(--p-line);box-shadow:0 0 0 35px color-mix(in srgb,var(--p-accent) 2%,transparent),0 0 0 65px color-mix(in srgb,var(--p-accent) 1%,transparent)}
+.hero-grid{background:linear-gradient(color-mix(in srgb,var(--p-accent) 4%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--p-accent) 4%,transparent) 1px,transparent 1px);background-size:34px 34px}
+.hero-orbit,.hero-orbit.second{border-color:var(--p-accent-line)}
+.hero-record{background:repeating-radial-gradient(circle,var(--p-bg) 0,var(--p-bg) 3px,var(--p-line) 4px,var(--p-bg) 6px);box-shadow:12px 22px 24px rgb(0 0 0 / .18),inset 0 0 25px rgb(0 0 0 / .2)}
+.hero-record:before{background:conic-gradient(from 60deg,transparent,color-mix(in srgb,var(--p-accent) 10%,transparent),transparent,color-mix(in srgb,var(--p-material-light) 8%,transparent),transparent)}
+.hero-record-label{background:var(--p-accent-soft);border-color:var(--p-accent-line);color:var(--p-art-accent)}
+.hero-record-label:after{background:var(--p-bg);border-color:var(--p-accent)}
+.hero-kicker,.hero-link,.hero-copy h2 span,.hero-spark{color:var(--p-accent-text)}
+.hero-link:hover{color:var(--p-accent-text)}
+.hero-kicker:before{background:var(--p-accent)}
+.hero-copy p{color:var(--p-muted)}
+.hero-badge{background:var(--p-control);border-color:var(--p-line);backdrop-filter:none;-webkit-backdrop-filter:none}
+.hero-badge span{background:var(--p-accent-text)}
+.shortcut-art{border-color:var(--p-line-strong);color:var(--p-subtle);box-shadow:0 0 0 15px color-mix(in srgb,var(--p-accent) 3%,transparent),0 0 0 30px color-mix(in srgb,var(--p-accent) 1%,transparent)}
+/* Panels, badges and explanatory/empty states. */
+.quality-group,.list-toolbar-label,.pagination,.queue-empty,.lyrics-placeholder,.lyric-empty,.content-loading,.initial-loading{color:var(--p-muted)}
+.quality-badge{background:color-mix(in srgb,var(--p-gold) 12%,var(--p-surface));color:var(--p-gold)}
+/* Compact quality picker; technical catalogue details remain in hover titles. */
+#quality-panel{top:auto;width:min(320px,calc(100vw - 30px));max-height:calc(100vh - 177px)}
+#quality-panel .panel-header{padding:18px 20px;align-items:flex-start}
+#quality-current{font-size:11px;line-height:1.65}
+#quality-content{flex:0 1 auto;padding:8px 12px 10px}
+#quality-panel .quality-option{min-height:44px;padding:11px 12px}
+#quality-panel .effect-option-copy strong{font-size:12px;line-height:1.45}
+#quality-panel .quality-group{padding:14px 12px 6px;font-size:10px;letter-spacing:.4px}
+#quality-panel #quality-note{padding:11px 24px 13px;font-size:10.5px;line-height:1.5}
+.local-badge,.search-tip-tags span,.login-instructions{background:var(--p-control);border-color:var(--p-line);color:var(--p-muted)}
+.inline-message{background:var(--p-accent-soft);color:var(--p-accent-text)}
+.error-card,.empty-card{background:var(--p-control);border-color:var(--p-line);box-shadow:var(--p-specular);backdrop-filter:none;-webkit-backdrop-filter:none}
+.error-card h3,.empty-card h3,.login-instructions strong{color:var(--p-text)}
+.error-card p,.empty-card p,.effects-note,.lyric-empty .text-button,.lyric-empty svg{color:var(--p-muted)}
+.empty-illustration{background:var(--p-raise);color:var(--p-art-accent)}
+.playlist-load-status{background:var(--p-control);border-color:var(--p-line);color:var(--p-muted)}
+.playlist-load-status>span:first-child,.playlist-load-status.loading>span:first-child{color:var(--p-accent-text)}
+.toast{color:var(--p-text)}
+.toast.error{background:color-mix(in srgb,var(--p-danger) 12%,var(--p-popup-bg));color:var(--p-error-ink)}
+/* Lyrics use the actual DOM class, not the older .lyrics-line typo. */
+.lyrics-track h2{color:var(--p-text-strong)}
+.lyrics-track p,.lyric-line{color:var(--p-muted)}
+.lyric-line.active{color:var(--p-accent-text)}
+/* Keep actual QR imagery black-on-white; surrounding chrome follows the palette. */
+.login-symbol span,.login-symbol span:nth-child(2),.login-symbol span:nth-child(3){background:var(--p-accent)}
+.login-modal .eyebrow,.qr-refresh,.qr-status,.qr-countdown,.login-subtitle,.login-note,.login-instructions p,.account-modal-content p{color:var(--p-muted)}
+.qr-status.success{color:var(--p-success-ink)}
+.qr-frame{background:var(--p-qr-bg);border-color:var(--p-line);box-shadow:none}
+.qr-overlay{background:color-mix(in srgb,var(--p-qr-bg) 92%,transparent);color:var(--p-qr-ink)}
+.qr-error,.qr-error svg,.qr-overlay svg{color:var(--p-qr-ink)}
+.instruction-number{border-color:var(--p-line-strong);color:var(--p-muted)}
+/* Scrollbars, range thumbs and loaders were still carrying old purple/white. */
+.main-content,.queue-content,.lyrics-body,.lyrics-content{scrollbar-color:var(--p-line-strong) transparent}
+::-webkit-scrollbar-thumb,.main-content::-webkit-scrollbar-thumb,.queue-content::-webkit-scrollbar-thumb,.lyrics-body::-webkit-scrollbar-thumb{background:var(--p-line-strong);border-color:transparent}
+::-webkit-scrollbar-thumb:hover,.main-content::-webkit-scrollbar-thumb:hover,.queue-content::-webkit-scrollbar-thumb:hover,.lyrics-body::-webkit-scrollbar-thumb:hover{background-color:var(--p-subtle)}
+#seek,#volume,input[type="range"]{background:var(--p-line-strong);accent-color:var(--p-accent)}
+input[type="range"]::-webkit-slider-thumb{background:var(--p-icon-accent);box-shadow:0 0 0 2px var(--p-surface)}
+.loading-disc{border-color:var(--p-line-strong);border-top-color:var(--p-icon-accent)}
+.skeleton-cover,.skeleton-line{background:linear-gradient(110deg,var(--p-surface) 25%,var(--p-raise) 45%,var(--p-surface) 65%);background-size:200% 100%}
+/* The fixed rail's two-class selectors need to beat the glass overlay. */
+.list-rail .rail-button{background:var(--p-sheen),var(--p-pane);border-color:var(--p-line-strong);color:var(--p-muted);box-shadow:var(--p-shadow);backdrop-filter:var(--p-frost);-webkit-backdrop-filter:var(--p-frost)}
+.list-rail .rail-button:hover:not(:disabled){background:linear-gradient(var(--p-hover),var(--p-hover)),var(--p-chrome);border-color:var(--p-line-strong);color:var(--p-accent-text);box-shadow:var(--p-shadow)}
+/* Match foreground to the native Acrylic theme; material colours stay fixed. */
+@media(prefers-color-scheme:light){
+  :root{
+    color-scheme:light;
+    --p-popup-bg:#edf1f6;
+    --p-text:#101c28;--p-text-strong:#07131e;
+    --p-muted:#162534;--p-subtle:#1b2e3d;
+    --p-accent-text:#15344f;--p-icon-accent:#1f4a74;
+    --p-favorite-ink:#802943;--p-text-shadow:none;
+    --p-error-ink:#50162c;--p-success-ink:#113723;
+  }
+}
+/* Small metadata gets real weight, rather than a fuzzy shadow to suggest weight. */
+.track-title,.player-track-copy>button{font-weight:600}
+.nav-item{font-weight:500}
+.track-artist,.track-album,.track-duration,.player-track-copy>div{font-size:12px;font-weight:500}
+.queue-row .track-artist,.effect-option-copy small{font-size:11.5px;font-weight:500}
+.sidebar-section-label,.brand-subtitle,.playlist-description,.list-header,.effects-note,.account-copy small{font-size:11.5px;font-weight:500}
+.lyric-line.active{font-weight:600}
+/* A transparent footer must not reveal overflow from the sidebar underneath it. */
+@media(max-height:660px){
+  .sidebar-note,.sidebar-footnote{display:none}
+  .brand{padding-bottom:20px}
+  .navigation{gap:4px}
+  .nav-item{min-height:38px}
+  .sidebar-section-label{margin-bottom:10px}
+  .library-label{margin-top:18px}
+  .sidebar-bottom{padding-top:12px}
+}
+@media(prefers-reduced-transparency:reduce){
+  :root{
+    color-scheme:dark;
+    --p-text:#f8fafc;--p-text-strong:#ffffff;--p-muted:#eef2f7;--p-subtle:#e0e7ef;
+    --p-accent-text:#c7dbf2;--p-icon-accent:var(--p-accent);--p-favorite-ink:var(--p-favorite);--p-text-shadow:none;
+    --p-error-ink:#ffe6eb;--p-success-ink:#c0e4d1;
+    --p-canvas:var(--p-bg);--p-nav-glass:var(--p-nav);
+    --p-popup-bg:var(--p-surface);
+    --p-chrome:var(--p-surface);--p-pane:var(--p-surface);--p-control:var(--p-surface);
+    --p-accent-soft:color-mix(in srgb,var(--p-accent) 17%,var(--p-surface));
+    --p-hover:color-mix(in srgb,var(--p-material-light) 7%,var(--p-surface));
+    --p-frost:none;--p-underlay-frost:none;--p-grain:none;--p-sheen:none;
+    --p-overlay:color-mix(in srgb,var(--p-bg) 70%,transparent);
+  }
+  .app-shell,.main-shell,.topbar,.main-content{background:var(--p-bg)}
+  .sidebar{background:var(--p-nav)}
+  .player,.pane,.queue-panel,.login-modal,.lyrics-panel,.toast{background:var(--p-surface)}
+  .discover-hero{background:var(--p-surface)}
+  .global-search:focus-within{background:var(--p-surface)}
+  .modal-layer{backdrop-filter:none;-webkit-backdrop-filter:none}
+}

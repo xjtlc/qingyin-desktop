@@ -1,0 +1,36 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+const { _electron } = require('./test-deps.cjs').loadTestDependency('playwright');
+const root = path.join(__dirname, '..');
+const output = path.join(root, 'test-output', 'library-online-verification');
+fs.mkdirSync(output, { recursive: true });
+fs.writeFileSync(path.join(output, 'preferences.json'), JSON.stringify({ preferences: { volume: 0 }, sort: { field: 'default', direction: 'desc' } }));
+let application;
+(async () => {
+  const env = { ...process.env, QINGYIN_TEST: '1', QINGYIN_TEST_DATA: output, QINGYIN_TEST_ACCOUNT_READONLY: '1' };
+  delete env.ELECTRON_RUN_AS_NODE;
+  application = await _electron.launch({ executablePath: process.argv[2] || require('electron'), args: process.argv[2] ? [] : [root], cwd: root, env, timeout: 30000 });
+  const page = await application.firstWindow();
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.name));
+  await page.waitForFunction(() => [...document.querySelectorAll('[data-action="account"]')].some(node => node.textContent.includes('已登录')), undefined, { timeout: 30000 });
+  await page.locator('[data-view="playlists"]').click();
+  await page.locator('.playlist-card').filter({ hasText: '我喜欢' }).click({ timeout: 30000 });
+  await page.waitForFunction(() => document.querySelector('[data-action="play-all"]')?.disabled === false, undefined, { timeout: 45000 });
+  const displayed = await page.locator('.track-row').count();
+  assert.equal(displayed, 434);
+  assert.equal(await page.locator('.playlist-load-status').count(), 0);
+  assert.equal(await page.locator('[data-action="play-all"]').isEnabled(), true);
+  const identities = await page.locator('.track-row').evaluateAll(nodes => nodes.map(node => node.dataset.trackKey));
+  assert.equal(new Set(identities).size, 434);
+  assert.ok(identities[0].endsWith(':433'), 'Whole playlist should start with final entry when descending');
+  assert.ok(identities.at(-1).endsWith(':0'), 'Whole playlist should end with first entry when descending');
+  assert.deepEqual(errors, []);
+  const result = { authenticatedAccount: true, actualPlaylistEntries: displayed, fullyLoaded: true, descendingEntirePlaylist: true, uniqueEntryIds: new Set(identities).size, rendererErrors: errors };
+  // Contains only counts and test results, without any account or song identifiers.
+  fs.writeFileSync(path.join(output, 'result.json'), JSON.stringify(result, null, 2));
+  console.log(JSON.stringify(result));
+  await application.close(); application = null;
+})().catch(async error => { console.error(error.name + ': ' + error.message); if (application) await application.close().catch(() => {}); process.exitCode = 1; });

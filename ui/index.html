@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: data:; media-src 'self' https: qingyin-audio: qingyin-stream:; connect-src qingyin-audio: qingyin-stream:; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>青音 · 概念桌面版</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="harmony.css">
+  <link rel="stylesheet" href="palette.css">
+  <link rel="stylesheet" href="refinements.css">
+  <link rel="stylesheet" href="personalized.css">
+  <link rel="stylesheet" href="lyrics.css">
+  <link rel="stylesheet" href="search-history-panel.css">
+  <link rel="stylesheet" href="comfort.css">
+  <link rel="stylesheet" href="list-controls.css">
+  <script src="player-state.js" defer></script>
+  <script src="library-state.js" defer></script>
+  <script src="search-history.js" defer></script>
+  <script src="daily-recommendations.js" defer></script>
+  <script src="playlist-artwork.js" defer></script>
+  <script src="lyrics-state.js" defer></script>
+  <script src="appearance.js" defer></script>
+  <script src="search-history-panel.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand drag-region">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <div><div class="brand-name">青音<span>QINGYIN</span></div><div class="brand-subtitle">概念桌面版</div></div>
+      </div>
+      <div class="sidebar-scroll">
+      <div class="sidebar-section-label">发现好声音</div>
+      <nav class="navigation" aria-label="主导航">
+        <button class="nav-item active" data-view="discover"><span class="nav-icon" data-icon="discover"></span><span>音乐发现</span><span class="nav-active-dot"></span></button>
+        <button class="nav-item" data-view="daily"><span class="nav-icon" data-icon="music"></span><span>每日推荐</span></button>
+        <button class="nav-item" data-view="guess"><span class="nav-icon" data-icon="headphones"></span><span>猜你喜欢</span></button>
+      </nav>
+      <div class="sidebar-section-label library-label">我的音乐</div>
+      <nav class="navigation" aria-label="音乐库">
+        <button class="nav-item" data-view="playlists"><span class="nav-icon" data-icon="playlist"></span><span>概念版歌单</span><span class="nav-count" id="playlist-count"></span></button>
+        <button class="nav-item" data-view="favorites"><span class="nav-icon" data-icon="heart"></span><span>本机收藏</span><span class="nav-count" id="favorite-count"></span></button>
+        <button class="nav-item" data-view="local"><span class="nav-icon" data-icon="folder"></span><span>本地音乐</span><span class="nav-count" id="local-count"></span></button>
+        <button class="nav-item" data-view="history"><span class="nav-icon" data-icon="history"></span><span>最近播放</span></button>
+      </nav>
+      </div>
+      <div class="sidebar-bottom">
+        <div class="sidebar-note"><span class="tiny-disc" aria-hidden="true"></span><span>给每一种心情<br><strong>留一个声音的位置。</strong></span></div>
+        <button class="account-card" id="sidebar-account" data-action="account"><span class="account-avatar" data-icon="user"></span><span class="account-copy"><strong>登录概念版账号</strong><small>让手机里的歌单，来到桌面</small></span><span class="account-arrow" data-icon="arrowRight"></span></button>
+      </div>
+    </aside>
+    <section class="main-shell">
+      <header class="topbar drag-region">
+        <div class="topbar-back no-drag"><button class="icon-button" id="back-button" data-action="back" aria-label="返回音乐发现" title="返回音乐发现"><span data-icon="arrowLeft"></span></button><span class="topbar-location" id="topbar-location">音乐发现</span></div>
+        <form class="global-search no-drag" id="search-form" role="search"><span data-icon="search"></span><input id="search-input" type="search" autocomplete="off" spellcheck="false" maxlength="100" placeholder="搜索歌曲、歌手、专辑" aria-label="搜索歌曲、歌手、专辑"><kbd>Ctrl K</kbd></form>
+        <div class="topbar-actions no-drag"><div class="brightness-control" id="brightness-control"><button class="icon-button brightness-button" id="brightness-button" data-action="brightness" aria-label="调整界面亮度" aria-expanded="false" title="界面亮度"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button></div><button class="top-login" id="top-login" data-action="account"><span class="tiny-avatar" data-icon="user"></span><span>登录账号</span></button><span class="window-divider"></span><button class="window-button" data-window="minimize" aria-label="最小化" title="最小化"><span data-icon="minus"></span></button><button class="window-button" data-window="maximize" aria-label="最大化" title="最大化"><span id="maximize-icon" data-icon="maximize"></span></button><button class="window-button close-window" data-window="close" aria-label="关闭" title="关闭"><span data-icon="close"></span></button></div>
+      </header>
+      <main id="main-content" class="main-content" tabindex="-1" aria-label="音乐内容"><div class="initial-loading"><div class="loading-disc"></div><p>正在连接你的声音世界…</p></div></main>
+    </section>
+    <footer class="player" aria-label="音乐播放器">
+      <div class="player-track"><button class="player-cover placeholder-cover" id="player-cover" data-action="lyrics" title="查看歌词" aria-label="查看歌词"><span data-icon="music"></span></button><div class="player-track-copy"><button id="player-title" data-action="lyrics" title="查看歌词">把喜欢的声音，带到桌面</button><div id="player-artist">选一首歌，让此刻有声</div></div><button class="icon-button player-heart" id="player-favorite" data-action="favorite-current" disabled aria-label="收藏当前歌曲" title="收藏当前歌曲"><span data-icon="heart"></span></button></div>
+      <div class="player-center"><div class="playback-controls"><span class="playback-spacer" aria-hidden="true"></span><button class="icon-button" id="prev-button" data-action="previous" aria-label="上一首" title="上一首" disabled><span data-icon="previous"></span></button><button class="main-play-button" id="play-button" data-action="play-pause" aria-label="播放" title="播放" disabled><span data-icon="play"></span></button><button class="icon-button" id="next-button" data-action="next" aria-label="下一首" title="下一首" disabled><span data-icon="next"></span></button><button class="icon-button mode-button" id="repeat-button" data-action="repeat" aria-label="列表循环，点击切换" title="列表循环"><span data-icon="repeat"></span></button></div><div class="progress-control"><span id="current-time">00:00</span><input id="seek" type="range" min="0" max="100" value="0" step="0.1" aria-label="播放进度" disabled><span id="duration-time">00:00</span></div></div>
+      <div class="player-tools"><button class="quality-tag" id="quality-tag" data-action="quality" title="已优先选择最高可播放音质，实际音质取决于歌曲和账号权限。" aria-label="音质设置：最高音质">最高音质</button><button class="icon-button effects-button" id="effects-button" data-action="effects" aria-label="音效：原音，点击选择" title="音效：原音，点击选择" aria-pressed="false"><span data-icon="sliders"></span></button><button class="icon-button output-button" id="output-button" data-action="output" aria-label="输出方式" title="输出方式" aria-pressed="false"><span data-icon="headphones"></span></button><button class="icon-button lyrics-button" id="lyrics-button" data-action="lyrics" aria-label="查看歌词" title="查看歌词">词</button><div class="volume-control"><button class="icon-button" id="mute-button" data-action="mute" aria-label="静音" title="静音"><span data-icon="volume"></span></button><input id="volume" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="音量"></div><span class="player-tool-divider"></span><button class="icon-button queue-button" id="queue-button" data-action="queue" aria-label="播放队列" title="播放队列"><span data-icon="queue"></span><span class="queue-size" id="queue-size">0</span></button></div>
+    </footer>
+  </div>
+  <aside class="comfort-panel" id="sleep-panel" hidden aria-labelledby="sleep-title"><div class="comfort-heading"><div><h2 id="sleep-title">定时停止</h2><p>让音乐陪你，安心休息。</p></div><button class="icon-button" data-action="sleep" aria-label="关闭定时停止面板"><span data-icon="close"></span></button></div><p class="sleep-status" id="sleep-status" aria-live="off">未设置定时</p><div class="sleep-presets"><button data-action="set-sleep" data-minutes="15">15 分钟</button><button data-action="set-sleep" data-minutes="30">30 分钟</button><button data-action="set-sleep" data-minutes="60">60 分钟</button><button data-action="set-sleep" data-mode="after-track">本首播完</button></div><form id="sleep-form" class="sleep-custom"><label for="sleep-minutes">自定义</label><input id="sleep-minutes" type="number" min="1" max="180" step="1" value="45" required aria-label="自定义停止分钟数"><span>分钟</span><button class="secondary-button" type="submit">设定</button></form><button class="text-button sleep-cancel" data-action="cancel-sleep" disabled>取消定时</button><p class="comfort-note">到时暂停并保留进度。选择本首播完后，手动切歌会对新歌曲生效。关闭青音会取消定时。</p></aside>
+  <aside class="comfort-panel" id="shortcuts-panel" hidden aria-labelledby="shortcuts-title"><div class="comfort-heading"><div><h2 id="shortcuts-title">快捷操作</h2><p>熟悉的按键，顺手地听歌。</p></div><button class="icon-button" data-action="shortcuts" aria-label="关闭快捷操作面板"><span data-icon="close"></span></button></div><dl class="shortcut-list"><div><dt>播放 / 暂停</dt><dd><kbd>空格</kbd></dd></div><div><dt>上一首 / 下一首</dt><dd><kbd>Ctrl</kbd> + <kbd>← / →</kbd></dd></div><div><dt>后退 / 前进 5 秒</dt><dd><kbd>← / →</kbd></dd></div><div><dt>调节音量</dt><dd><kbd>↑ / ↓</kbd></dd></div><div><dt>静音 / 取消静音</dt><dd><kbd>M</kbd></dd></div><div><dt>搜索音乐</dt><dd><kbd>Ctrl</kbd> + <kbd>K</kbd></dd></div><div><dt>打开播放队列</dt><dd><kbd>Q</kbd></dd></div><div><dt>查看 / 收起歌词</dt><dd><kbd>L</kbd></dd></div><div><dt>关闭浮层</dt><dd><kbd>Esc</kbd></dd></div></dl><p class="comfort-note">在青音窗口内生效；输入文字或调节滑块时，保留控件原有按键操作。</p></aside>
+  <section class="brightness-panel" id="brightness-panel" hidden aria-label="界面亮度"><div class="brightness-panel-heading"><strong>界面亮度</strong><output id="brightness-value" for="brightness-slider">72%</output></div><input id="brightness-slider" type="range" min="0" max="100" step="1" value="72" aria-label="界面亮度"><p class="brightness-panel-hint">调整雾透界面的明暗。</p><button class="brightness-reset" data-action="brightness-reset">恢复默认</button></section>
+  <aside class="queue-panel" id="queue-panel" hidden aria-label="播放队列"><div class="panel-header"><div><h2>播放队列</h2><p id="queue-count">0 首歌曲</p></div><button class="icon-button" data-action="queue" aria-label="关闭播放队列"><span data-icon="close"></span></button></div><div id="queue-content" class="queue-content"></div></aside>
+  <aside class="queue-panel" id="effects-panel" hidden aria-label="音效"><div class="panel-header"><div><h2>音效</h2><p id="effects-current">原音 · 不做处理</p></div><button class="icon-button" data-action="effects" aria-label="关闭音效面板"><span data-icon="close"></span></button></div><div id="effects-content" class="queue-content"></div><p class="effects-note">音效仅用于内置播放。选择「原音」会关闭均衡器与压缩器；mpv 输出不应用此音效。</p></aside>
+  <aside class="queue-panel" id="quality-panel" hidden aria-label="音质选择"><div class="panel-header"><div><h2>音质</h2><p id="quality-current">自动（最高可播放）</p></div><button class="icon-button" data-action="quality" aria-label="关闭音质面板"><span data-icon="close"></span></button></div><div id="quality-content" class="queue-content"></div><p class="effects-note" id="quality-note">以实际播放音质为准。</p></aside>
+  <aside class="queue-panel" id="output-panel" hidden aria-label="输出方式"><div class="panel-header"><div><h2>输出方式</h2><p id="output-current">内置播放</p></div><button class="icon-button" data-action="output" aria-label="关闭输出方式面板"><span data-icon="close"></span></button></div><div id="output-content" class="queue-content"></div><p class="effects-note" id="output-note">内置播放经过系统共享混音。mpv 请求独占播放，并按设备实际支持的能力协商输出；实际采样率以当前输出参数为准。设备不支持音源格式时可能发生重采样。</p></aside>
+  <section class="lyrics-panel" id="lyrics-panel" hidden aria-label="歌词"><div class="lyrics-ambient" id="lyrics-ambient" aria-hidden="true"></div><div class="lyrics-top"><span class="eyebrow">正在播放<span class="lyrics-top-caption">歌词</span></span><div class="lyrics-top-tools"><button class="lyrics-taskbar-toggle" id="taskbar-lyrics-toggle" data-action="taskbar-lyrics" aria-pressed="true" title="在 Windows 任务栏左侧显示当前歌词"><span data-icon="lyric"></span><span>任务栏歌词</span><span class="lyrics-toggle-dot" aria-hidden="true"></span></button><button class="icon-button lyrics-close" data-action="lyrics" aria-label="收起歌词" title="收起歌词 · Esc"><span data-icon="close"></span></button></div></div><div class="lyrics-body" id="lyrics-body"></div><div class="lyrics-footer" hidden><span id="lyrics-hint">点击歌词，跳到这一句</span><button class="lyrics-follow" id="lyrics-follow" data-action="follow-lyrics" hidden>回到当前歌词</button></div></section>
+  <div class="modal-layer" id="modal-layer" hidden><section class="login-modal" id="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-title"><button class="icon-button modal-close" data-action="close-modal" aria-label="关闭登录"><span data-icon="close"></span></button><div class="login-symbol" aria-hidden="true"><span></span><span></span><span></span></div><div class="eyebrow">YOUR MUSIC. YOUR MOMENT.</div><h2 id="login-title">让熟悉的歌单，来到桌面。</h2><p class="login-subtitle">登录酷狗概念版账号</p><div class="qr-frame" id="qr-frame"><div class="loading-disc"></div></div><div class="qr-status" id="qr-status" role="status">正在生成二维码…</div><div class="qr-countdown" id="qr-countdown"></div><button class="text-button qr-refresh" id="qr-refresh" data-action="refresh-qr"><span data-icon="refresh"></span>刷新二维码</button><div class="login-instructions"><span class="instruction-number">1</span><p>打开手机上的 <strong>酷狗概念版 App</strong></p><span class="instruction-number">2</span><p>使用 App 扫码，并在手机上确认登录</p></div><div class="login-note">青音是非官方本地客户端<br>登录用于读取概念版账号、歌单和可播放的音乐。</div></section></div>
+  <nav class="list-rail" id="list-rail" hidden aria-label="歌曲列表快捷定位"><button class="rail-button" data-action="list-jump" data-jump="top" aria-label="一键到顶" title="一键到顶"><span data-icon="toTop"></span></button><button class="rail-button" data-action="list-jump" data-jump="current" disabled aria-label="定位当前播放歌曲" title="当前没有正在播放且在本列表中的歌曲"><span data-icon="locate"></span></button><button class="rail-button" data-action="list-jump" data-jump="bottom" aria-label="一键到底" title="一键到底"><span data-icon="toBottom"></span></button></nav>
+  <div class="toast-stack" id="toast-stack" role="status" aria-live="polite"></div>
+  <audio id="audio" preload="metadata"></audio>
+</body>
+</html>

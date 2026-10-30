@@ -1,0 +1,532 @@
+/* harmony.css — one deliberate layer over styles.css.
+ *
+ * The original sheet grew to ~250 near-duplicate colours (all the tints sat within 1–3% of
+ * each other), 18 different corner radii and 20 type sizes, most of them 8–11px. That is
+ * what made the interface feel muddy. This file defines a single scale for each and
+ * restates the surfaces that use them. It loads after styles.css, so an identical selector
+ * wins on order — no !important needed.
+ *
+ * Reverting the look is a one-line change: drop this <link> from index.html.
+ */
+
+:root{
+  /* neutrals — one violet-leaning ramp, replacing the near-duplicate greys */
+  /* Dark theme. The ramp keeps the violet lean of the original identity but is built from
+     near-black rather than near-white, so the accent colours and the glass rims carry the
+     contrast instead of large light surfaces. */
+  --h-bg:#14151e;
+  --h-surface:#1d1e29;
+  --h-raise:#262734;
+  /* Interaction tints carry a violet cast rather than a neutral grey one: hover and
+     selection are the states the user sees most, so they are where the brand lives. */
+  --h-tint:#282937;
+  --h-tint-strong:#323443;
+  --h-line:#343643;
+  --h-line-soft:#2b2d38;
+  --h-line-strong:#464957;
+  /* The dimmest step is still used for 10.5–11px text (row numbers, column headers), so it
+     has to clear 4.5:1 on the page background — not the 3:1 large-text allowance. */
+  --h-faint:#959bab;
+  --h-muted:#a7adbc;
+  --h-soft:#c0c5d0;
+  --h-ink:#e1e4eb;
+  --h-ink-strong:#f0f2f6;
+  --h-nav:#11121a;
+  --h-nav-raise:#222430;
+  /* accents — lifted for legibility against black */
+  --h-lime:#b5d2c0;
+  --h-lime-deep:#a0c3ae;
+  --h-lime-tint:#263c33;
+  /* Ink that sits ON the lime fill must stay dark — lime is a light colour even in a dark
+     theme. Text on the dark lime *tint* needs the opposite, hence the second token. */
+  --h-lime-ink:#20382e;
+  --h-lime-text:#d3e8dc;
+  --h-violet:#a19bbf;
+  --h-violet-soft:#8e88ad;
+  --h-violet-ink:#d1cce5;
+  --h-violet-tint:#323040;
+  /* semantics */
+  --h-rose:#d4a0ad;
+  --h-gold:#c6ad7f;
+  --h-gold-ink:#e1cfab;
+  --accent:var(--h-lime); --violet:var(--h-violet); --ink:var(--h-ink);
+  --muted:var(--h-muted); --subtle:var(--h-faint); --surface:var(--h-surface);
+  --nav:var(--h-nav); --line:var(--h-line);
+  /* shape */
+  --h-r-xs:6px; --h-r-s:9px; --h-r-m:13px; --h-r-l:18px; --h-r-pill:999px;
+  /* elevation */
+  --h-sh-1:0 1px 2px rgba(0,0,0,.18);
+  --h-sh-2:0 4px 14px rgba(0,0,0,.22);
+  --h-sh-3:0 16px 40px rgba(0,0,0,.34);
+  /* motion */
+  --h-ease:160ms cubic-bezier(.4,0,.2,1);
+}
+
+/* ---------------------------------------------------------------- global */
+
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+::selection{background:var(--h-lime);color:var(--h-lime-ink)}
+:focus-visible{outline:2px solid var(--h-violet);outline-offset:2px}
+button:focus-visible{border-radius:var(--h-r-xs)}
+button,input{transition:background var(--h-ease),color var(--h-ease),border-color var(--h-ease),box-shadow var(--h-ease),transform var(--h-ease)}
+
+.main-content{background:var(--h-bg);scrollbar-color:#d3d6e4 transparent}
+.main-content::-webkit-scrollbar{width:11px}
+.main-content::-webkit-scrollbar-track{background:transparent}
+.main-content::-webkit-scrollbar-thumb{background:#d7dae7;border:3px solid var(--h-bg);border-radius:var(--h-r-pill)}
+.main-content::-webkit-scrollbar-thumb:hover{background:#c5c9dc}
+
+/* ---------------------------------------------------------------- chrome */
+
+.main-shell{background:var(--h-bg)}
+.topbar{background:var(--h-bg)}
+.page-intro h1{font-size:28px;letter-spacing:1px;color:var(--h-ink-strong)}
+.section-head h2{color:var(--h-ink-strong)}
+
+.global-search{background:var(--h-tint);border-radius:var(--h-r-s);height:38px;color:var(--h-muted)}
+.global-search:focus-within{background:var(--h-surface);box-shadow:0 0 0 2px var(--h-violet-soft),var(--h-sh-1)}
+.global-search input{font-size:12.5px;color:var(--h-ink)}
+.global-search input::placeholder{color:var(--h-faint)}
+.global-search kbd{background:var(--h-surface);border-color:var(--h-line-strong);color:var(--h-faint);font-size:9.5px;padding:2px 5px}
+.topbar-location{font-size:12px;color:var(--h-muted)}
+.top-login{font-size:12px;color:var(--h-soft)}
+.tiny-avatar{background:var(--h-tint);color:var(--h-soft)}
+.window-button{border-radius:var(--h-r-xs);color:var(--h-muted)}
+.window-button:hover{background:var(--h-tint);color:var(--h-ink)}
+.window-button.close-window:hover{background:var(--h-rose);color:#fff}
+
+/* ---------------------------------------------------------------- sidebar */
+
+.nav-item{border-radius:var(--h-r-s);font-size:13.5px;color:#a2a6bb;transition:background var(--h-ease),color var(--h-ease)}
+.nav-item:hover{background:#ffffff0d;color:#e9ebf4}
+.nav-item.active{background:rgba(181,210,192,.12);color:var(--h-lime-text)}
+.nav-item.active svg{color:var(--h-lime)}
+.sidebar-section-label{font-size:10.5px;color:#8c93ab}
+.account-card{background:var(--h-nav-raise);border-radius:var(--h-r-s);transition:background var(--h-ease)}
+.account-card:hover{background:#262b3d}
+.sidebar-footnote,
+.sidebar-note{color:#7d8499}
+
+/* ---------------------------------------------------------------- cards */
+
+.playlist-title{font-size:12.5px;line-height:1.65;color:var(--h-ink-strong);min-height:41px}
+.playlist-description{font-size:10.5px;color:var(--h-muted);margin-top:6px}
+.playlist-cover{border-radius:var(--h-r-m);background:var(--h-tint)}
+/* Placeholder covers used to be five unrelated hues (lavender, teal, olive, rose, slate),
+   which read as random colour rather than a designed set. They are now five steps inside
+   one violet family, so a grid of empty covers still looks deliberate. */
+.cover-fallback{background:linear-gradient(150deg,#e6e5fa,#bcb9e6);color:#fbfaff}
+.cover-fallback.tone-1{background:linear-gradient(150deg,#dcdcf8,#aab0e3)}
+.cover-fallback.tone-2{background:linear-gradient(150deg,#e9e4fa,#c2b6e7)}
+.cover-fallback.tone-3{background:linear-gradient(150deg,#dee5f8,#a9b7e0)}
+.cover-fallback.tone-4{background:linear-gradient(150deg,#e8e6fb,#b9b5e7)}
+
+.library-art{border-radius:var(--h-r-l)}
+/* Same reasoning: the four library headers keep a faint semantic hint but share one
+   family instead of pulling pink, green and blue into the page. */
+.library-art{background:linear-gradient(135deg,#9aa0ee,#d9d8f7)}
+.library-art.favorites-art{background:linear-gradient(135deg,#b39ae4,#e4d8f7)}
+.library-art.local-art{background:linear-gradient(135deg,#8fb4dc,#d7e5f4)}
+.library-art.history-art{background:linear-gradient(135deg,#9fa6e8,#dde0f8)}
+.library-copy h1{font-size:27px;color:var(--h-ink-strong)}
+.library-copy p{font-size:12px;color:var(--h-muted)}
+.library-actions{gap:10px;margin-bottom:24px}
+
+/* ---------------------------------------------------------------- buttons */
+
+.primary-button{background:var(--h-lime);color:var(--h-lime-ink);border-radius:var(--h-r-s);font-size:12.5px;min-height:38px;padding:11px 19px;box-shadow:var(--h-sh-1)}
+.primary-button:hover{background:var(--h-lime-deep);box-shadow:var(--h-sh-2)}
+.secondary-button{background:var(--h-surface);border:1px solid var(--h-line-strong);border-radius:var(--h-r-s);color:var(--h-soft);font-size:12.5px;min-height:38px;padding:10px 18px}
+.secondary-button:hover{background:var(--h-tint);border-color:var(--h-violet-soft);color:var(--h-violet-ink)}
+.text-button{font-size:12px;color:var(--h-muted)}
+.text-button:hover{color:var(--h-violet-ink)}
+.small-pill{font-size:11.5px}
+
+/* ---------------------------------------------------------------- list */
+
+.list-toolbar{padding:0 14px;margin-bottom:12px;gap:8px}
+.list-toolbar-label{font-size:11px;color:var(--h-faint)}
+.sort-chip{font-size:11.5px;color:var(--h-soft);background:var(--h-surface);border:1px solid var(--h-line);border-radius:var(--h-r-pill);min-height:29px;padding:0 13px}
+.sort-chip:hover{background:var(--h-tint);border-color:var(--h-line-strong);color:var(--h-ink)}
+.sort-chip.active{background:var(--h-violet-tint);border-color:#d5d3f4;color:var(--h-violet-ink);font-weight:600}
+.sort-chip svg{width:12px;height:12px}
+
+.list-header,.track-row{grid-template-columns:36px minmax(0,1.6fr) minmax(0,1.05fr) 70px 84px;gap:16px}
+.list-header{color:var(--h-faint);font-size:10.5px;letter-spacing:.4px;padding:0 14px 12px;border-bottom:1px solid var(--h-line)}
+.track-row{padding:11px 14px;border-bottom:1px solid var(--h-line-soft);border-radius:var(--h-r-s);min-height:62px}
+.track-row:hover{background:var(--h-tint)}
+.track-row.current{background:var(--h-tint-strong)}
+.track-row.current .track-title{color:var(--h-violet-ink)}
+/* A lime edge ties "what is playing" to the same accent the logo and 播放全部 already use,
+   so the brand colour appears where it carries meaning instead of only in the header. */
+.track-row.current:before{content:"";position:absolute;left:0;top:7px;bottom:7px;width:3px;border-radius:0 var(--h-r-xs) var(--h-r-xs) 0;background:var(--h-lime)}
+.queue-row.current:before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:0 var(--h-r-xs) var(--h-r-xs) 0;background:var(--h-lime)}
+.track-row.located{background:var(--h-lime-tint);box-shadow:inset 0 0 0 1px var(--h-lime)}
+
+.track-index{font-size:11.5px;color:var(--h-faint);width:26px}
+.track-title{font-size:13.5px;font-weight:500;color:var(--h-ink);line-height:1.5}
+.track-artist{font-size:11.5px;color:var(--h-muted);margin-top:5px}
+.track-album{font-size:12px;color:var(--h-muted)}
+.track-duration{font-size:12px;color:var(--h-muted)}
+.track-thumb{width:38px;height:38px;border-radius:var(--h-r-xs);background:var(--h-tint);color:var(--h-faint)}
+.track-actions{gap:2px}
+.track-actions .icon-button{color:var(--h-faint)}
+.track-actions .icon-button:hover{background:var(--h-surface);color:var(--h-violet-ink)}
+.track-actions .favorite-on{color:var(--h-rose)}
+.local-badge{background:var(--h-tint);color:var(--h-soft);border-radius:var(--h-r-xs)}
+
+.pagination{color:var(--h-muted);font-size:12px}
+.inline-message{font-size:11.5px;color:var(--h-soft);background:var(--h-violet-tint)}
+
+/* ---------------------------------------------------------------- rail */
+
+.list-rail{gap:8px}
+.rail-button{width:44px;min-height:46px;border-radius:var(--h-r-m);background:var(--h-surface);border:1px solid var(--h-line);color:var(--h-soft);box-shadow:var(--h-sh-2)}
+.rail-button:hover:not(:disabled){background:var(--h-violet-tint);border-color:#d5d3f4;color:var(--h-violet-ink);transform:translateX(-2px)}
+.rail-button svg{width:17px;height:17px}
+.rail-button small{font-size:9.5px;color:inherit;opacity:.85}
+.rail-button:disabled{opacity:.4}
+
+/* ---------------------------------------------------------------- player */
+
+.player{background:var(--h-surface);border-top:1px solid var(--h-line);box-shadow:0 -1px 0 var(--h-line)}
+.player-cover{width:54px;height:54px;border-radius:var(--h-r-s);background:var(--h-tint);color:var(--h-faint)}
+.player-track-copy>button{font-size:13.5px;color:var(--h-ink)}
+.player-track-copy>div{font-size:11px;color:var(--h-muted)}
+.playback-controls{gap:20px;margin-bottom:10px}
+.playback-controls .icon-button{color:var(--h-muted)}
+.playback-controls .icon-button:hover{background:var(--h-tint);color:var(--h-ink)}
+.main-play-button{width:38px;height:38px;background:var(--h-lime);color:var(--h-lime-ink);box-shadow:var(--h-sh-2)}
+.main-play-button:hover:not(:disabled){background:var(--h-lime-deep);transform:scale(1.03)}
+.mode-button.active{color:var(--h-lime-deep)!important}
+.progress-control{font-size:10.5px;color:var(--h-muted)}
+#seek,#volume{accent-color:var(--h-violet)}
+.player-tools{gap:9px}
+/* The footer is the tightest row in the layout. The badge keeps its own width instead of
+   being squeezed into an ellipsis by its neighbours. */
+.quality-tag{font-size:11px;color:var(--h-soft);background:var(--h-tint);border:1px solid transparent;border-radius:var(--h-r-pill);padding:4px 11px;flex:0 0 auto;min-width:56px;text-align:center}
+.quality-tag:hover{background:var(--h-tint-strong);color:var(--h-violet-ink)}
+#volume{width:76px;flex:none}
+.effects-button.active,.output-button.active,.lyrics-button.active{color:var(--h-violet-ink);background:var(--h-violet-tint)}
+.queue-size{font-size:10px;color:var(--h-faint)}
+
+/* ---------------------------------------------------------------- panels */
+
+.queue-panel{background:var(--h-surface);border:1px solid var(--h-line);border-radius:var(--h-r-m);box-shadow:var(--h-sh-3)}
+.panel-header{border-bottom:1px solid var(--h-line-soft);padding:22px 24px}
+.panel-header h2{font-size:16.5px;color:var(--h-ink-strong);letter-spacing:.5px}
+.panel-header p{font-size:11px;color:var(--h-muted);margin-top:6px}
+.queue-row{border-radius:var(--h-r-s);transition:background var(--h-ease);position:relative}
+.queue-row:hover{background:var(--h-tint)}
+.queue-row.current{background:var(--h-tint-strong)}
+.queue-row.current .track-title{color:var(--h-violet-ink)}
+.queue-row .track-title{font-size:12.5px;color:var(--h-ink)}
+.queue-row .track-artist{font-size:10.5px;color:var(--h-muted)}
+.effect-option{border-radius:var(--h-r-s);transition:background var(--h-ease)}
+.effect-option:hover{background:var(--h-tint)}
+.effect-option.active{background:var(--h-violet-tint)}
+.effect-option-copy strong{font-size:12.5px;color:var(--h-ink)}
+.effect-option.active .effect-option-copy strong{color:var(--h-violet-ink)}
+.effect-option-copy small{font-size:10.5px;color:var(--h-muted)}
+.effect-check{color:var(--h-violet)}
+.effects-note{font-size:10.5px;color:var(--h-muted);border-top:1px solid var(--h-line-soft)}
+.quality-group{font-size:10.5px;color:var(--h-faint)}
+.quality-badge{background:var(--h-lime-tint);color:var(--h-lime-text);border-radius:var(--h-r-pill);font-size:9.5px;padding:2px 7px}
+.queue-empty{color:var(--h-muted);font-size:12px}
+
+/* ---------------------------------------------------------------- states */
+
+.error-card,.empty-card{border:1px solid var(--h-line);border-radius:var(--h-r-m);background:var(--h-surface);box-shadow:var(--h-sh-1)}
+.error-card h3,.empty-card h3{color:var(--h-ink-strong)}
+.error-card p,.empty-card p{font-size:12.5px;color:var(--h-muted)}
+.empty-illustration{background:var(--h-tint);border-radius:var(--h-r-l);color:var(--h-violet-soft)}
+.content-loading,.initial-loading,.content-loading span{font-size:12px;color:var(--h-muted)}
+.loading-disc{border-color:var(--h-tint-strong);border-top-color:var(--h-violet)}
+.toast{background:var(--h-nav-raise);border:1px solid #ffffff1a;border-radius:var(--h-r-s);font-size:12.5px;box-shadow:var(--h-sh-3)}
+.skeleton-cover,.skeleton-line{background:linear-gradient(110deg,var(--h-tint) 25%,#f6f7fc 45%,var(--h-tint) 65%);background-size:200% 100%}
+
+/* --------------------------------------------------------------- narrow */
+
+@media(max-width:1160px){
+  .list-header,.track-row{grid-template-columns:30px minmax(0,1.6fr) minmax(0,1fr) 58px 72px;gap:12px}
+  .track-title{font-size:13px}
+  .rail-button{width:40px;min-height:42px}
+}
+
+/* ============================================================ frosted liquid glass
+ *
+ * The window carries a Windows 11 acrylic layer (see main.cjs), so nothing in the page may
+ * paint an opaque background over it. Each surface below is translucent instead.
+ *
+ * Transparency alone does not read as glass — it reads as a hole. What makes the material
+ * legible as glass is the edge: a bright rim where the pane catches light, a specular line
+ * along the top, a slightly milky lift through the body, colour bleeding in from behind,
+ * and a faint grain so the surface looks ground rather than polished.
+ *
+ * backdrop-filter stays limited to a handful of large fixed surfaces. Per-row blur would be
+ * slow on a 434-entry list and would smear the entire screen.
+ */
+
+:root{
+  --glass-grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23g)' opacity='0.18'/></svg>");
+  /* On black the rim has to be restrained: a bright hairline that reads as a lit edge on
+     white glass reads as a drawn outline on dark glass. */
+  --glass-rim:inset 0 0 0 1px rgba(255,255,255,.13);
+  --glass-specular:inset 0 1px 0 rgba(255,255,255,.12),inset 0 -1px 0 rgba(255,255,255,.04);
+  --glass-lift:0 12px 32px rgba(0,0,0,.30),0 2px 8px rgba(0,0,0,.22);
+}
+
+body,.app-shell,.main-shell,.topbar{background:transparent}
+
+/* The page-wide veil. It darkens rather than lightens, and it is violet rather than
+   neutral: the glass still picks up the desktop, but whatever colour the wallpaper is, it
+   arrives tinted toward the brand instead of turning the whole app green or brown. */
+.main-shell{background:linear-gradient(165deg,rgba(27,27,40,.94),rgba(20,21,30,.94) 60%,rgba(26,26,38,.93))}
+
+/* ---------------------------------------------------------------- sidebar */
+
+.sidebar{
+  background:
+    var(--glass-grain),
+    linear-gradient(170deg,rgba(24,25,35,.94),rgba(17,18,26,.95) 55%,rgba(22,23,33,.94));
+  background-blend-mode:soft-light,normal;
+  backdrop-filter:blur(36px) saturate(110%);
+  -webkit-backdrop-filter:blur(36px) saturate(110%);
+  box-shadow:inset -1px 0 0 rgba(255,255,255,.07),inset 0 1px 0 rgba(255,255,255,.11);
+}
+
+/* ---------------------------------------------------------------- panels */
+
+/* .player and .queue-panel share the pane recipe below. */
+.pane{
+  background:linear-gradient(150deg,rgba(44,49,67,.72),rgba(19,23,33,.80) 48%,rgba(28,33,46,.76));
+  backdrop-filter:blur(50px) saturate(180%) brightness(.90);
+  -webkit-backdrop-filter:blur(50px) saturate(180%) brightness(.90);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:var(--glass-specular),var(--glass-lift);
+}
+
+.player{
+  background:
+    var(--glass-grain),
+    linear-gradient(180deg,rgba(39,40,54,.94),rgba(29,30,41,.95));
+  background-blend-mode:soft-light,normal;
+  backdrop-filter:blur(36px) saturate(110%);
+  -webkit-backdrop-filter:blur(36px) saturate(110%);
+  border-top:1px solid rgba(255,255,255,.14);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 -6px 24px rgba(0,0,0,.18);
+}
+
+.queue-panel{
+  background:
+    var(--glass-grain),
+    linear-gradient(150deg,rgba(41,42,56,.96),rgba(29,30,41,.97));
+  background-blend-mode:soft-light,normal;
+  backdrop-filter:blur(36px) saturate(110%);
+  -webkit-backdrop-filter:blur(36px) saturate(110%);
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:var(--h-r-l);
+  box-shadow:var(--glass-rim),var(--glass-specular),var(--glass-lift);
+}
+.panel-header{border-bottom:1px solid rgba(255,255,255,.09)}
+
+/* ---------------------------------------------------------------- rail */
+
+.list-rail .rail-button{
+  background:linear-gradient(150deg,rgba(255,255,255,.13),rgba(255,255,255,.05));
+  backdrop-filter:blur(30px) saturate(110%);
+  -webkit-backdrop-filter:blur(30px) saturate(110%);
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:var(--h-r-l);
+  box-shadow:var(--glass-specular),var(--h-sh-2);
+}
+.list-rail .rail-button:hover:not(:disabled){
+  background:linear-gradient(150deg,rgba(255,255,255,.17),rgba(255,255,255,.09));
+  box-shadow:var(--glass-rim),var(--glass-specular),var(--h-sh-2);
+}
+
+/* ---------------------------------------------- tinted only — no backdrop blur
+ * These sit on top of the veil, so they need the tint and the rim but not their own blur;
+ * a rim on every row would also draw 434 hairlines down the list.
+ */
+.track-row{border-bottom:1px solid rgba(255,255,255,.055)}
+.track-row:hover{background:rgba(161,155,191,.08)}
+.track-row.current{background:linear-gradient(90deg,rgba(181,210,192,.12),rgba(181,210,192,.05));box-shadow:none}
+/* The tint darkens the row, which pushed its secondary text under 4.5:1. An emphasised row
+   should read at least as well as a normal one, so its dim text steps up a level. */
+.track-row.current .track-artist,
+.track-row.current .track-album,
+.track-row.current .track-duration,
+.track-row.current .track-index{color:var(--h-soft)}
+.track-row.current .icon-button{color:var(--h-muted)}
+.list-header{border-bottom:1px solid rgba(255,255,255,.09)}
+
+.global-search{
+  background:linear-gradient(150deg,rgba(255,255,255,.10),rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.11);
+}
+.global-search:focus-within{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.24);box-shadow:0 0 0 2px var(--h-violet),inset 0 1px 0 rgba(255,255,255,.16)}
+
+.sort-chip{
+  background:linear-gradient(150deg,rgba(255,255,255,.11),rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+}
+.sort-chip:hover{background:linear-gradient(150deg,rgba(255,255,255,.18),rgba(255,255,255,.10))}
+.sort-chip.active{
+  background:rgba(161,155,191,.18);
+  border-color:rgba(161,155,191,.30);
+  box-shadow:none;
+}
+
+.secondary-button{
+  background:linear-gradient(150deg,rgba(255,255,255,.12),rgba(255,255,255,.06));
+  border:1px solid rgba(255,255,255,.13);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14);
+}
+.secondary-button:hover{background:linear-gradient(150deg,rgba(255,255,255,.20),rgba(255,255,255,.12))}
+
+.playlist-cover{background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px rgba(255,255,255,.09)}
+.track-thumb{background:linear-gradient(150deg,rgba(255,255,255,.10),rgba(255,255,255,.05));box-shadow:inset 0 0 0 1px rgba(255,255,255,.09)}
+
+.error-card,.empty-card{
+  background:linear-gradient(150deg,rgba(255,255,255,.10),rgba(255,255,255,.05));
+  backdrop-filter:blur(30px) saturate(170%);
+  -webkit-backdrop-filter:blur(30px) saturate(170%);
+  border:1px solid rgba(255,255,255,.11);
+  box-shadow:var(--glass-specular),var(--glass-lift);
+}
+.account-card{background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.account-card:hover{background:rgba(255,255,255,.11);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+
+.toast{
+  background:linear-gradient(150deg,rgba(48,53,72,.92),rgba(22,26,37,.90));
+  backdrop-filter:blur(30px) saturate(160%);
+  -webkit-backdrop-filter:blur(30px) saturate(160%);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),var(--glass-lift);
+}
+.modal-layer{background:rgba(4,6,10,.56);backdrop-filter:blur(22px) saturate(130%);-webkit-backdrop-filter:blur(22px) saturate(130%)}
+.login-modal{
+  background:linear-gradient(150deg,rgba(44,49,67,.88),rgba(20,24,34,.92));
+  backdrop-filter:blur(46px) saturate(170%);
+  -webkit-backdrop-filter:blur(46px) saturate(170%);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:var(--glass-rim),var(--glass-specular),var(--glass-lift);
+}
+.lyrics-panel{
+  background:linear-gradient(150deg,rgba(32,36,50,.86),rgba(15,18,26,.90));
+  backdrop-filter:blur(52px) saturate(160%);
+  -webkit-backdrop-filter:blur(52px) saturate(160%);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:var(--glass-specular),var(--glass-lift);
+}
+
+/* Accessibility escape hatch: honour a request for less transparency. */
+@media(prefers-reduced-transparency:reduce){
+  .main-shell{background:#0d0f15}
+  .sidebar{background:#0a0c12;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
+  .player{background:#171a23;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:0 -1px 0 #252a37}
+  .queue-panel{background:#171a23;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:0 15px 60px rgba(0,0,0,.55)}
+  .list-rail .rail-button{background:#1c202b;backdrop-filter:none;-webkit-backdrop-filter:none}
+  .track-row,.sort-chip,.global-search,.secondary-button{box-shadow:none}
+  .track-row.current{background:#232837;box-shadow:none}
+  .error-card,.empty-card,.login-modal,.toast,.lyrics-panel{backdrop-filter:none;-webkit-backdrop-filter:none}
+}
+
+/* ================================================================ dark fixups
+ *
+ * styles.css is written for a light surface: native controls, scrollbars and the placeholder
+ * covers all still assume white behind them. These are the few that are not reached by the
+ * token swap above.
+ */
+
+:root{color-scheme:dark}
+
+.main-content{scrollbar-color:#3a4155 transparent}
+.main-content::-webkit-scrollbar-thumb{background:#343b4d;border:3px solid var(--h-bg)}
+.main-content::-webkit-scrollbar-thumb:hover{background:#434b61}
+
+/* Placeholder covers were pastel violet, which reads as a light-mode block on black.
+   Deepened and slightly desaturated so they sit behind the real cover art instead of
+   competing with it. */
+.cover-fallback{background:linear-gradient(150deg,#555166,#333140);color:#ded9eb}
+.cover-fallback.tone-1{background:linear-gradient(150deg,#4c5062,#2d303e)}
+.cover-fallback.tone-2{background:linear-gradient(150deg,#595063,#37303e)}
+.cover-fallback.tone-3{background:linear-gradient(150deg,#4a5364,#2b333f)}
+.cover-fallback.tone-4{background:linear-gradient(150deg,#555263,#32303f)}
+.library-art{background:linear-gradient(135deg,#625e7a,#373547)}
+.library-art.favorites-art{background:linear-gradient(135deg,#715f7c,#403346)}
+.library-art.local-art{background:linear-gradient(135deg,#516e72,#2d4245)}
+.library-art.history-art{background:linear-gradient(135deg,#5c647a,#333949)}
+.library-art{color:#e7e5fa}
+
+.empty-illustration{background:rgba(255,255,255,.06);color:var(--h-violet)}
+.loading-disc{border-color:rgba(255,255,255,.13);border-top-color:var(--h-violet)}
+.skeleton-cover,.skeleton-line{background:linear-gradient(110deg,rgba(255,255,255,.05) 25%,rgba(255,255,255,.10) 45%,rgba(255,255,255,.05) 65%);background-size:200% 100%}
+.local-badge{background:rgba(255,255,255,.10);color:var(--h-soft)}
+.inline-message{background:var(--h-violet-tint);color:var(--h-violet-ink)}
+.pagination{color:var(--h-muted)}
+.lyrics-line{color:var(--h-muted)}
+.lyrics-line.active{color:var(--h-ink-strong)}
+
+/* These still carried a white fill from the light sheet. Each keeps its shape and simply
+   swaps the fill for a translucent lift. */
+.small-pill{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.12);color:var(--h-soft);box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.small-pill:hover{background:rgba(255,255,255,.17);color:var(--h-ink)}
+.icon-button:hover:not(:disabled){background:rgba(255,255,255,.10);color:var(--h-ink)}
+.track-index button{background:rgba(255,255,255,.12);color:var(--h-ink)}
+.card-play{background:rgba(10,12,18,.68);border:1px solid rgba(255,255,255,.20);color:#fff;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.card-play:hover{background:var(--h-lime);color:#2a3318;border-color:transparent}
+.library-shortcut{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.10);color:var(--h-soft)}
+.library-shortcut:hover{background:rgba(255,255,255,.13);color:var(--h-ink)}
+.welcome-card{background:linear-gradient(150deg,rgba(255,255,255,.09),rgba(255,255,255,.04));border-color:rgba(255,255,255,.10)}
+.welcome-card-art{background:linear-gradient(135deg,#65627e,#39364c);color:var(--h-violet-ink)}
+.search-tip-tags span{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.10);color:var(--h-soft)}
+.compact-tracks{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.09)}
+.window-divider{background:rgba(255,255,255,.12)}
+input[type="range"]{background:rgba(255,255,255,.14)}
+.hero-badge{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.14)}
+
+/* These surfaces share the same quiet palette as the player and library. */
+.discover-hero{background:linear-gradient(120deg,#2a293b,#252d36);border:1px solid rgba(161,155,191,.15)}
+.hero-kicker,.hero-link{color:var(--h-lime-text)}
+.hero-kicker:before{background:var(--h-lime)}
+.hero-copy h2 span{color:var(--h-lime-text)}
+.hero-copy p{color:var(--h-soft)}
+.hero-orbit{border-color:rgba(161,155,191,.15)}
+.hero-record-label{background:linear-gradient(135deg,#665e7c,#465f57);color:var(--h-ink-strong)}
+.hero-record-label{border-color:var(--h-lime)}
+.hero-record-label:after{border-color:var(--h-lime)}
+.hero-spark{color:var(--h-lime)}
+.hero-caption,.section-head small,.page-intro p{color:var(--h-muted)}
+.brand-name span,.brand-subtitle,.sidebar-note,.sidebar-footnote,.nav-count{color:var(--h-muted)}
+.sidebar-note strong,.account-copy small{color:var(--h-soft)}
+.account-avatar{background:var(--h-tint);color:var(--h-soft)}
+.playlist-load-status{display:flex;align-items:center;gap:12px;margin:-10px 0 18px;padding:10px 14px;border:1px solid var(--h-line-soft);border-radius:var(--h-r-s);background:rgba(181,210,192,.04);color:var(--h-muted);font-size:12px}
+.playlist-load-status>span:first-child{color:var(--h-lime-text)}
+.playlist-load-status>span:nth-child(2){margin-left:auto;font-variant-numeric:tabular-nums}
+.playlist-load-status.loading>span:first-child{color:var(--h-violet-ink)}
+.qr-status,.qr-countdown,.login-subtitle,.login-note,.login-instructions p,.account-modal-content p{color:var(--h-muted)}
+.login-instructions{background:var(--h-tint);border:1px solid var(--h-line)}
+.login-instructions strong{color:var(--h-ink)}
+.instruction-number{color:var(--h-soft);border-color:var(--h-line-strong)}
+.login-modal,.lyrics-panel{background:linear-gradient(150deg,rgba(41,42,56,.97),rgba(29,30,41,.97));backdrop-filter:blur(36px) saturate(110%);-webkit-backdrop-filter:blur(36px) saturate(110%)}
+.toast{background:rgba(39,40,54,.97);color:var(--h-ink);box-shadow:var(--h-sh-2)}
+.toast.error{background:#493740;color:#f1dce3}
+.quality-badge{background:rgba(198,173,127,.14);color:var(--h-gold-ink)}
+.track-row.current .track-title{color:var(--h-lime-text)}
+.nav-item.active .nav-count{color:var(--h-lime-text)}
+.main-content,.queue-content,.lyrics-body{scrollbar-color:var(--h-line-strong) transparent}
+.queue-content::-webkit-scrollbar,.lyrics-body::-webkit-scrollbar{width:8px}
+.queue-content::-webkit-scrollbar-track,.lyrics-body::-webkit-scrollbar-track{background:transparent}
+.queue-content::-webkit-scrollbar-thumb,.lyrics-body::-webkit-scrollbar-thumb{background:var(--h-line-strong);border:2px solid transparent;background-clip:padding-box;border-radius:var(--h-r-pill)}
+.queue-content::-webkit-scrollbar-thumb:hover,.lyrics-body::-webkit-scrollbar-thumb:hover{background-color:#5c5e70}
+
+@media(prefers-reduced-transparency:reduce){
+  .main-shell,.topbar{background:var(--h-bg)}
+  .sidebar{background:var(--h-nav)}
+  .player,.queue-panel,.login-modal,.lyrics-panel,.toast{background:var(--h-surface);backdrop-filter:none;-webkit-backdrop-filter:none}
+  .list-rail .rail-button{background:var(--h-raise);backdrop-filter:none;-webkit-backdrop-filter:none}
+}

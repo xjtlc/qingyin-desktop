@@ -1,0 +1,85 @@
+/* Brighter, adjustable mist-glass finish. Underlying desktop remains visible. */
+:root{
+  --qy-frost-brightness:1.301;
+  --qy-glass-wash:24.1%;
+  --p-bg:#303744;
+  --p-surface:#434c59;
+  --p-raise:#596574;
+  --p-canvas-alpha:12%;
+  --p-underlay-frost:blur(32px) saturate(112%) brightness(var(--qy-frost-brightness));
+}
+.app-shell{
+  background:
+    linear-gradient(145deg,
+      color-mix(in srgb,#eef5ff var(--qy-glass-wash),transparent),
+      color-mix(in srgb,#dceafd var(--qy-glass-wash),transparent)),
+    var(--p-grain),var(--p-sheen),var(--p-canvas);
+  background-blend-mode:normal,soft-light,normal,normal;
+}
+@media(prefers-reduced-transparency:reduce){
+  .app-shell{
+    background:color-mix(in srgb,#dde8f5 var(--qy-glass-wash),var(--p-bg));
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+  }
+}
+/* Number yields to the play button on hover/focus. */
+.track-row:hover .track-index .track-position,
+.track-index:focus-within .track-position{visibility:hidden}
+.track-index button{z-index:1}
+.daily-description{color:var(--p-subtle);font-size:12px;line-height:1.8;margin:-10px 0 20px}
+.daily-today{font-size:11px;letter-spacing:1px;color:var(--p-accent-text);margin-bottom:6px}
+.daily-actions{margin-bottom:22px}
+@media(max-width:1160px){
+  .player{grid-template-columns:minmax(180px,1fr) minmax(220px,1.1fr) max-content;gap:16px}
+  .player-tools{gap:7px}
+  .player-tools #volume{width:46px}
+}
+/* Brightness panel uses an opaque card for legible controls against any wallpaper. */
+.topbar{position:relative;z-index:25}
+.brightness-control{display:flex;align-items:center;position:relative;flex:none;margin-right:8px}
+.brightness-button{width:30px;height:30px}
+.brightness-button[aria-expanded="true"]{background:var(--p-accent-soft);color:var(--p-accent-text)}
+.brightness-panel{
+  position:absolute;right:0;top:calc(100% + 15px);width:260px;padding:16px;
+  border:1px solid var(--p-popup-line);border-radius:14px;
+  background:var(--p-popup-bg);color:var(--p-text);
+  box-shadow:0 18px 44px rgb(0 0 0 / .30);
+  -webkit-app-region:no-drag;z-index:50;
+}
+.brightness-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px;font-size:13px}
+.brightness-panel-heading strong{font-weight:600}
+.brightness-panel-heading output{font-variant-numeric:tabular-nums;color:var(--p-accent-text)}
+.brightness-panel input[type="range"]{display:block;width:100%;accent-color:var(--p-accent);cursor:pointer}
+.brightness-panel-hint{margin-top:10px;line-height:1.6;font-size:10px;color:var(--p-subtle)}
+.brightness-reset{display:block;margin:13px 0 0 auto;font-size:11px;color:var(--p-accent-text);padding:5px 7px;border-radius:6px}
+.brightness-reset:hover{background:var(--p-hover)}
+/* The titlebar and brand are normally draggable. While a popover is visible,
+   let them receive outside-pointer events; dragging returns once it closes. */
+body:has(
+  #queue-panel:not([hidden]),
+  #effects-panel:not([hidden]),
+  #quality-panel:not([hidden]),
+  #output-panel:not([hidden]),
+  #lyrics-panel:not([hidden]),
+  #brightness-panel:not([hidden]),
+  #search-history-panel:not([hidden])
+) .drag-region { -webkit-app-region: no-drag; }
+
+/* Navigation scrolls independently; the brand and account remain visible. */
+.sidebar-scroll{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior-y:contain;
+  scrollbar-width:thin;
+  scrollbar-color:var(--p-line-strong) transparent;
+  padding-right:4px;
+  margin-right:-4px;
+}
+.sidebar-scroll::-webkit-scrollbar{width:5px}
+.sidebar-scroll::-webkit-scrollbar-track{background:transparent}
+.sidebar-scroll::-webkit-scrollbar-thumb{background:var(--p-line-strong);border-radius:8px}
+.sidebar-bottom{flex:0 0 auto}
+#brightness-panel{position:fixed;top:73px;right:160px}

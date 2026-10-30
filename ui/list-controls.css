@@ -1,0 +1,23 @@
+/* Align complete icon/label groups, including refresh and sorting direction. */
+.library-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.library-actions>button{display:inline-flex;flex-direction:row;align-items:center;justify-content:center;gap:8px;min-height:38px;padding-block:0;line-height:1.25;vertical-align:middle;white-space:nowrap}
+.library-actions>button>svg{display:block;flex:none}
+.library-actions>.text-button{padding-inline:12px}
+.list-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:6px;min-height:34px}
+.list-toolbar-label{display:inline-flex;align-items:center;line-height:1.2;margin-right:2px}
+.list-toolbar .sort-chip{display:inline-flex;flex-direction:row;align-items:center;justify-content:center;gap:5px;min-height:30px;padding-block:0;line-height:1.2;vertical-align:middle;white-space:nowrap}
+.list-toolbar .sort-chip>svg{display:block;flex:none}
+
+/* Reserve a separate gutter so the rail never covers the song action buttons. */
+#main-content.has-rail{padding-right:82px}
+.list-rail{position:fixed;right:12px;top:calc(50% - 12px);transform:translateY(-50%);z-index:32;display:flex;flex-direction:column;align-items:center;gap:4px;padding:5px;width:52px;box-sizing:border-box;border:1px solid var(--p-line-strong,#657284);border-radius:16px;background:var(--p-popup-bg,#2b313c);box-shadow:0 10px 30px #0d192b26;pointer-events:none}
+.list-rail[hidden]{display:none!important}
+.list-rail .rail-button{display:flex;align-items:center;justify-content:center;flex:none;width:40px;height:40px;padding:0;border:0;border-radius:11px;background:transparent;color:var(--p-text,#e8edf4);box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;pointer-events:auto;cursor:pointer}
+.list-rail .rail-button>span{display:flex;align-items:center;justify-content:center}
+.list-rail .rail-button svg{width:19px;height:19px;display:block;flex:none;stroke-width:1.7}
+.list-rail .rail-button:hover:not(:disabled){background:var(--p-accent-soft,#42576c);color:var(--p-accent-text,#d4e6f7);box-shadow:none}
+.list-rail .rail-button:focus-visible{outline:2px solid var(--p-focus,#91b7df);outline-offset:-2px}
+.list-rail .rail-button:disabled{opacity:.35;cursor:default}
+.track-row.located{background:var(--p-accent-soft,#42576c);outline:2px solid var(--p-accent,#91b7df);outline-offset:-2px;box-shadow:none}
+body:has(#lyrics-panel:not([hidden])) .list-rail{visibility:hidden}
+@media(max-width:1000px){#main-content.has-rail{padding-right:76px}.list-rail{right:9px;width:48px;padding:4px}.list-rail .rail-button{width:38px;height:38px}}

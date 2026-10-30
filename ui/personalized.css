@@ -1,0 +1,8 @@
+.playlist-cover .playlist-designed-cover,.library-art .playlist-designed-cover{width:100%;height:100%;object-fit:cover}
+.personalized-heading{align-items:center;gap:20px}
+.personalized-heading .small-pill:disabled{opacity:.55;cursor:wait}
+.recommendation-summary{display:flex;align-items:center;gap:9px;color:var(--p-subtle);font-size:12px;margin:-8px 0 24px;line-height:1.8}
+.recommendation-summary::before{content:"";width:5px;height:5px;flex:none;border-radius:50%;background:var(--p-accent)}
+.personalized-actions{margin-bottom:22px}
+.sidebar-bottom .account-card{margin-bottom:4px}
+@media(max-width:1000px){.personalized-heading{align-items:flex-start}.recommendation-summary{font-size:11px}}
